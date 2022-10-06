@@ -33,7 +33,7 @@ public class ProductController {
         return new ResponseEntity(products, HttpStatus.OK);
     }
     @GetMapping(value="/product/{id}")
-    public ResponseEntity listProductID(@RequestParam Long id){
+    public ResponseEntity listProductID(@PathVariable Long id){
         Optional<Product> products = productRepository.findById(id);
         if(products.isPresent()){
             return new ResponseEntity(products, HttpStatus.OK);
@@ -49,9 +49,9 @@ public class ProductController {
         return new ResponseEntity(products, HttpStatus.OK);
     }
     @GetMapping(value = "/product/{nombre}/{precio}")
-    public ResponseEntity listProductNombreID(@PathVariable String nombre,
+    public ResponseEntity listProductNombreAndId(@PathVariable String nombre,
                                               @PathVariable double precio){
-        List<Product> products = productRepository.findAllByNombreAndPrecio(nombre, precio);
+        List<Product> products = productRepository.findByNombreAndPrecio(nombre, precio);
         if(products.isEmpty()){
             return ResponseEntity.notFound().build();
         }
